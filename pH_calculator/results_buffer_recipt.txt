@@ -1,0 +1,6 @@
+
+        
+>calculations number 1
+        phosphate  buffer parameters: volume 1.0 [dm3], pH 6.0, concentration 0.78 [mol/dm^3]
+        buffer recipt: basic component 0.19690217370603474 [mol], acid component 0.5830978262939652 [mol], fill water to 1.0
+        
