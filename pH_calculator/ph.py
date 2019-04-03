@@ -8,7 +8,6 @@ from Sources.class_Recipt import Solutions_recipt
 pKao = 4.76
 pK = 7.21
 e = 2.718281828459
-x = 1
 y = 0
 z = 0
 CmK = 0
@@ -24,7 +23,7 @@ www.gene-calc.pl
 contact: contact@gene-calc.pl
 """)
 
-while x == 1:
+while True:
     print("""
 Menu
 
@@ -36,9 +35,14 @@ Menu
     acetate [3]
     phosphate [4] """)
 
-    rb = int(input("=> "))
-    s_res = input("Would you like to save results in file ? t/n ").upper()
+    try:
+        rb = int(input("=> "))
+        s_res = input("Would you like to save results in file ? t/n ").upper()
     
+    except:
+        print("type number ! ")
+        continue
+
     if s_res != "T" and s_res != "N":
         input("Wrong answer, press Enter")
         continue
@@ -54,25 +58,31 @@ Menu
         V2 = float(input("volume of base component [dm^3] "))
         c1 = float(input("acid concentration [mol/dm^3] "))
         c2 = float(input("base concentration [mol/dm^3] "))
-
-        basic_calc = Basic_calculations(rb, V1, V2, c1, c2)
-        Mk, Mz, Vo, Cmk, Cmz = basic_calc.values()
         
-        ionic_class = Buffer_pH(rb, Cmz, Cmk, CmK, CmK)
-        u, F = ionic_class.ionic_strength()
+        try: 
+            basic_calc = Basic_calculations(rb, V1, V2, c1, c2)
+            Vo, Cmk, Cmz = basic_calc.values()
+            
+            ionic_class = Buffer_pH(rb, Cmz, Cmk, CmK)
+            u, F = ionic_class.ionic_strength()
 
-        Ph = pKao + log((Cmz * F)/Cmk,10)
-        Ph0 = pKao + log(Cmz / Cmk, 10)
+            Ph = pKao + log((Cmz * F)/Cmk,10)
+            Ph0 = pKao + log(Cmz / Cmk, 10)
+            
+            print("\nionic strength: ", round(u, 3))
+            print("activity coefficient f: ", round(F, 3))
+            print("Ph with corrections : ", round(Ph, 3))
+            print("Ph: ", round(Ph0, 3))
         
-        print("\nionic strength: ", round(u, 3))
-        print("activity coefficient f: ", round(F, 3))
-        print("Ph with corrections : ", round(Ph, 3))
-        print("Ph: ", round(Ph0, 3))
+        except:
+            print("something went wrong")
+            continue
         
         if s_res == "T":
             Save_results.save_results_ph_calc(y, "pH for acetate buffer pKa = 4.76 ", V1, V2, c1, c2, u, Ph, Ph0)
 
         ask = input("\nTo close press ENTER, to continue press c: ").upper()
+        
         if ask == "C":
             continue
         else:
@@ -89,22 +99,28 @@ Menu
         V2 = float(input("volume of base component [dm^3] "))
         c1 = float(input("acid concentration [mol/dm^3] "))
         c2 = float(input("base concentration [mol/dm^3] "))
-
-        basic_calc = Basic_calculations(rb, V1, V2, c1, c2)
-        Mk, Mz, Vo, Cmk, Cmz, CmK = basic_calc.values()
         
-        ionic_class = Buffer_pH(rb, Cmz, Cmk, CmK)
-        u, F1, F2 = ionic_class.ionic_strength()
-        
-        Ph = pK + log(((Cmz * F1)/(Cmk * F2)),10)
-        Ph0 = pK + log(Cmz / Cmk, 10)
+        try:
 
-        print("\nionic strength: ", round(u, 3))
-        print("acid {}, base {} and K+ {} ions concetrations [mol/dm^3]".format(round(Cmk, 3), round(Cmz, 3), round(CmK,3)))
-        print("base activity coefficient: ", round(F1, 3))
-        print("acid activity coefficient: ", round(F2, 3))
-        print("Ph with correction: ", round(Ph, 3))
-        print("Ph: ", round(Ph0, 3))
+            basic_calc = Basic_calculations(rb, V1, V2, c1, c2)
+            Vo, Cmk, Cmz, CmK = basic_calc.values()
+            
+            ionic_class = Buffer_pH(rb, Cmz, Cmk, CmK)
+            u, F1, F2 = ionic_class.ionic_strength()
+            
+            Ph = pK + log(((Cmz * F1)/(Cmk * F2)),10)
+            Ph0 = pK + log(Cmz / Cmk, 10)
+
+            print("\nionic strength: ", round(u, 3))
+            print("acid {}, base {} and K+ {} ions concetrations [mol/dm^3]".format(round(Cmk, 3), round(Cmz, 3), round(CmK,3)))
+            print("base activity coefficient: ", round(F1, 3))
+            print("acid activity coefficient: ", round(F2, 3))
+            print("Ph with correction: ", round(Ph, 3))
+            print("Ph: ", round(Ph0, 3))
+        
+        except:
+            print("something went wrong")
+            continue
 
         if s_res == "T":
             Save_results.save_results_ph_calc(y,"pH for phosphate buffer pKa = 7.21 ", V1, V2, c1, c2, u, Ph, Ph0)
@@ -125,7 +141,12 @@ Menu
         pH = float(input("pH: "))
         czyu = input("Would you like to consider ionic strength ? t/n: ").upper()
         
-        Mcso, Mcko = Solutions_recipt.count_recipt_acetate(rb, czyu, V, C, pH, pKao)
+        try:
+            Mcso, Mcko = Solutions_recipt.count_recipt_acetate(rb, czyu, V, C, pH, pKao)
+        
+        except:
+            print("something went wrong")
+            continue
         
         if s_res == "T":
             Save_results.save_results_recipt(z, "acetate ", V, pH, C, Mcso, Mcko)
@@ -146,10 +167,15 @@ Menu
         pH = float(input("pH: "))
         czyu = input("Would you like to consider ionic strength ? t/n ").upper()
 
-        Mcso, Mcko =Solutions_recipt.count_recipt_fosfotate(V, C, pH, czyu, pKao, pK)
+        try:
+            Mcso, Mcko = Solutions_recipt.count_recipt_fosfotate(V, C, pH, czyu, pKao, pK)
         
+        except:
+            print("something went wrong")
+            continue
+
         if s_res == "T":
-            Save_results.save_results_recipt(z, "phosphate ", V, pH, C, Mcso, Mcko)
+            Save_results.save_results_recipt(z, "phosphate", V, pH, C, Mcso, Mcko)
 
         ask = input("\nTo close press ENTER, to continue press C: ").upper()
             
@@ -159,6 +185,7 @@ Menu
             exit()
 
     else:
-        input("\n\tError, try again, press ENTER")
+        input("Error, try option from 1-4, press ENTER")
         continue
+   
 

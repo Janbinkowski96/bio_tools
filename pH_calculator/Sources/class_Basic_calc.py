@@ -21,7 +21,7 @@ class Basic_calculations():
             Cmk = Mk / Vo
             Cmz = Mz / Vo
             
-            return(Mk, Mz, Vo, Cmk, Cmz)
+            return(Vo, Cmk, Cmz)
 
         elif self.calc_type == 2:
             Mk = (self.V_1 * self.C_1)
@@ -31,7 +31,7 @@ class Basic_calculations():
             Cmz = Mz / Vo
             CmK = (2 * Mz + Mk) / Vo
             
-            return(Mk, Mz, Vo, Cmk, Cmz, CmK)
+            return(Vo, Cmk, Cmz, CmK)
 
         else:
             input("Error, try again, press ENTER")

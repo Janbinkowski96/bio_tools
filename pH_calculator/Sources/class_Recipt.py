@@ -1,7 +1,9 @@
+from math import sqrt
+
 class Solutions_recipt():
 
     def count_recipt_acetate(rb, czyu, V, C, pH, pKao ):
-        from math import sqrt
+        
 
         if czyu == "T":
 
@@ -50,7 +52,6 @@ class Solutions_recipt():
         return(Mcso, Mcko)
 
     def count_recipt_fosfotate(V, C, pH, czyu, pKao, pK):
-        from math import sqrt
 
         if czyu == "T":
             
@@ -87,11 +88,11 @@ class Solutions_recipt():
 
             print("\nTo prepare buffer with specified parameters, you need to use:")
             print("basic component {} [mol] HPO42-".format(round(Mcso, 3)))
-            print("acid component {} mol H2PO4-".format(round(Mcko, 3)))
+            print("acid component {} [mol] H2PO4-".format(round(Mcko, 3)))
             print("ionic strength: ", round(UO, 3))
             print("fill with water to volume {} [dm3]".format(V))
         
-        if czyu == "N":
+        elif czyu == "N":
 
             o = pH - pK 
             logz = 10 ** o # CH3COO-/Ch3COOH
@@ -104,7 +105,7 @@ class Solutions_recipt():
 
             print("\nTo prepare buffer with specified parameters, you need to use:")
             print("basic component {} [mol] HPO42-".format(round(Mcso,3)))
-            print("acid component {} mol H2PO4-".format(round(Mcko, 3)))
+            print("acid component {} [mol] H2PO4-".format(round(Mcko, 3)))
             print("fill with water to volume {} [dm3]".format(V))
         
         return(Mcso, Mcko)
