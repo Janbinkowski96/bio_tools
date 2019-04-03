@@ -1,0 +1,2 @@
+### Distance based off sequence similarity
+Tool to count similarity between sequences all vs. all method (input is FASTA file) and generate heatmap with dendrogram to present distance between sequences.
